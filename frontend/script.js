@@ -1,7 +1,7 @@
 const leaderboardBtn = document.getElementById("leaderboard-btn");
 const leaderboardDiv = document.querySelector(".leaderboard");
 const leaderboardTableBody = document.querySelector("#leaderboard-table tbody");
-const BACKEND_URL = "https://quiz-app-roj5.onrender.com";
+const BACKEND_URL = "https://quizapp-srcl.onrender.com";
 
 let userData = {
   name: "",
