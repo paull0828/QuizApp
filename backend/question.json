@@ -1,0 +1,137 @@
+[
+  {
+    "question": "Which element has the highest melting point?",
+    "answers": [
+      { "text": "Iron", "correct": false },
+      { "text": "Carbon (as diamond)", "correct": true },
+      { "text": "Tungsten", "correct": false },
+      { "text": "Platinum", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the only country that is also a continent?",
+    "answers": [
+      { "text": "Greenland", "correct": false },
+      { "text": "Iceland", "correct": false },
+      { "text": "Australia", "correct": true },
+      { "text": "Antarctica", "correct": false }
+    ]
+  },
+  {
+    "question": "Which language has the most native speakers worldwide?",
+    "answers": [
+      { "text": "Hindi", "correct": false },
+      { "text": "Spanish", "correct": false },
+      { "text": "English", "correct": false },
+      { "text": "Mandarin Chinese", "correct": true }
+    ]
+  },
+  {
+    "question": "Who developed the theory of general relativity?",
+    "answers": [
+      { "text": "Isaac Newton", "correct": false },
+      { "text": "Galileo Galilei", "correct": false },
+      { "text": "Albert Einstein", "correct": true },
+      { "text": "Nikola Tesla", "correct": false }
+    ]
+  },
+  {
+    "question": "Which planet has the most moons?",
+    "answers": [
+      { "text": "Jupiter", "correct": false },
+      { "text": "Saturn", "correct": true },
+      { "text": "Neptune", "correct": false },
+      { "text": "Uranus", "correct": false }
+    ]
+  },
+  {
+    "question": "Which ancient civilization built Machu Picchu?",
+    "answers": [
+      { "text": "Maya", "correct": false },
+      { "text": "Aztec", "correct": false },
+      { "text": "Inca", "correct": true },
+      { "text": "Olmec", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the longest river in the world?",
+    "answers": [
+      { "text": "Amazon River", "correct": true },
+      { "text": "Nile River", "correct": false },
+      { "text": "Yangtze River", "correct": false },
+      { "text": "Mississippi River", "correct": false }
+    ]
+  },
+  {
+    "question": "Which organ produces insulin in the human body?",
+    "answers": [
+      { "text": "Liver", "correct": false },
+      { "text": "Pancreas", "correct": true },
+      { "text": "Gallbladder", "correct": false },
+      { "text": "Spleen", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the hardest natural substance on Earth?",
+    "answers": [
+      { "text": "Quartz", "correct": false },
+      { "text": "Diamond", "correct": true },
+      { "text": "Graphite", "correct": false },
+      { "text": "Topaz", "correct": false }
+    ]
+  },
+  {
+    "question": "Which Nobel Prize-winning scientist discovered penicillin?",
+    "answers": [
+      { "text": "Alexander Fleming", "correct": true },
+      { "text": "Marie Curie", "correct": false },
+      { "text": "Louis Pasteur", "correct": false },
+      { "text": "Robert Koch", "correct": false }
+    ]
+  },
+  {
+    "question": "In which year did the Berlin Wall fall?",
+    "answers": [
+      { "text": "1987", "correct": false },
+      { "text": "1989", "correct": true },
+      { "text": "1991", "correct": false },
+      { "text": "1990", "correct": false }
+    ]
+  },
+  {
+    "question": "Which gas makes up most of the Earth's atmosphere?",
+    "answers": [
+      { "text": "Oxygen", "correct": false },
+      { "text": "Carbon Dioxide", "correct": false },
+      { "text": "Nitrogen", "correct": true },
+      { "text": "Hydrogen", "correct": false }
+    ]
+  },
+  {
+    "question": "Which is the tallest mountain in the solar system?",
+    "answers": [
+      { "text": "Mount Everest", "correct": false },
+      { "text": "Olympus Mons", "correct": true },
+      { "text": "Mauna Kea", "correct": false },
+      { "text": "Makalu", "correct": false }
+    ]
+  },
+  {
+    "question": "Which country was formerly known as Abyssinia?",
+    "answers": [
+      { "text": "Egypt", "correct": false },
+      { "text": "Ethiopia", "correct": true },
+      { "text": "Sudan", "correct": false },
+      { "text": "Morocco", "correct": false }
+    ]
+  },
+  {
+    "question": "Which scientist is credited with discovering gravity?",
+    "answers": [
+      { "text": "Albert Einstein", "correct": false },
+      { "text": "Isaac Newton", "correct": true },
+      { "text": "Stephen Hawking", "correct": false },
+      { "text": "Galileo Galilei", "correct": false }
+    ]
+  }
+]
