@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leaderboard - Quiz App</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- Add Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="leaderboard-container">
+      <div class="leaderboard-header">
+        <i class="fas fa-trophy trophy-icon"></i>
+        <h1>🏆 Leaderboard</h1>
+        <p class="leaderboard-subtitle">
+          See how you rank against other quiz champions!
+        </p>
+      </div>
+
+      <div class="leaderboard-stats">
+        <div class="stat-card">
+          <i class="fas fa-users"></i>
+          <span class="stat-number" id="total-players">-</span>
+          <span class="stat-label">Total Players</span>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-star"></i>
+          <span class="stat-number" id="avg-score">-</span>
+          <span class="stat-label">Avg Score</span>
+        </div>
+      </div>
+
+      <!-- Mobile-friendly table wrapper -->
+      <div class="table-wrapper">
+        <div class="table-header">
+          <h3><i class="fas fa-ranking-star"></i> Rankings</h3>
+        </div>
+
+        <!-- Desktop Table View -->
+        <table class="desktop-table">
+          <thead>
+            <tr>
+              <th><i class="fas fa-medal"></i> Rank</th>
+              <th><i class="fas fa-user"></i> Name</th>
+              <th><i class="fas fa-phone"></i> Mobile</th>
+              <th><i class="fas fa-star"></i> Score</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboard-body"></tbody>
+        </table>
+
+        <!-- Mobile Card View -->
+        <div class="mobile-cards" id="mobile-leaderboard"></div>
+      </div>
+
+      <!-- Enhanced Pagination -->
+      <div id="pagination-controls">
+        <button id="prev-btn" class="pagination-btn">
+          <i class="fas fa-chevron-left"></i>
+          <span>Previous</span>
+        </button>
+        <div class="page-info-container">
+          <span id="page-info">Page 1 of 1</span>
+          <div class="page-dots" id="page-dots"></div>
+        </div>
+        <button id="next-btn" class="pagination-btn">
+          <span>Next</span>
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <a href="index.html" class="action-btn primary">
+          <i class="fas fa-home"></i>
+          <span>Back to Quiz</span>
+        </a>
+        <button class="action-btn secondary" onclick="refreshLeaderboard()">
+          <i class="fas fa-refresh"></i>
+          <span>Refresh</span>
+        </button>
+      </div>
+    </div>
+
+    <script>
+      const BACKEND_URL = "https://quiz-app-roj5.onrender.com";
+      let currentPage = 1;
+      const limit = 10;
+      let totalPages = 1;
+      let totalPlayers = 0;
+      let avgScore = 0;
+
+      const prevBtn = document.getElementById("prev-btn");
+      const nextBtn = document.getElementById("next-btn");
+      const pageInfo = document.getElementById("page-info");
+      const desktopTable = document.getElementById("leaderboard-body");
+      const mobileCards = document.getElementById("mobile-leaderboard");
+
+      function getRankIcon(index) {
+        if (index === 0) return '<i class="fas fa-trophy rank-gold"></i>';
+        if (index === 1) return '<i class="fas fa-medal rank-silver"></i>';
+        if (index === 2) return '<i class="fas fa-award rank-bronze"></i>';
+        return `<span class="rank-number">#${index + 1}</span>`;
+      }
+
+      function getRankClass(index) {
+        if (index === 0) return "rank-first";
+        if (index === 1) return "rank-second";
+        if (index === 2) return "rank-third";
+        return "";
+      }
+
+      function createMobileCard(entry, index) {
+        const globalIndex = (currentPage - 1) * limit + index;
+        const rankClass = getRankClass(globalIndex);
+
+        return `
+          <div class="player-card ${rankClass}">
+            <div class="card-header">
+              <div class="rank-badge">
+                ${getRankIcon(globalIndex)}
+              </div>
+              <div class="player-info">
+                <h4 class="player-name">${entry.name} ${entry.surname}</h4>
+                <p class="player-mobile">
+                  <i class="fas fa-phone"></i>
+                  ${entry.mobile}
+                </p>
+              </div>
+              <div class="score-badge">
+                <span class="score-number">${entry.score}</span>
+                <span class="score-label">pts</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function loadPage(page) {
+        // Show loading state
+        desktopTable.innerHTML =
+          '<tr><td colspan="4" class="loading-row"><div class="loading-spinner"></div> Loading...</td></tr>';
+        mobileCards.innerHTML =
+          '<div class="loading-cards"><div class="loading-spinner"></div> Loading leaderboard...</div>';
+
+        fetch(`${BACKEND_URL}/api/leaderboard?page=${page}&limit=${limit}`)
+          .then((res) => res.json())
+          .then((result) => {
+            // Clear loading states
+            desktopTable.innerHTML = "";
+            mobileCards.innerHTML = "";
+
+            currentPage = result.page;
+            totalPages = result.totalPages;
+            totalPlayers = result.totalPlayers || result.data.length;
+            avgScore = result.avgScore || 0;
+
+            // Update stats
+            document.getElementById("total-players").textContent = totalPlayers;
+            document.getElementById("avg-score").textContent =
+              avgScore.toFixed(1);
+
+            // Populate desktop table
+            result.data.forEach((entry, index) => {
+              const row = document.createElement("tr");
+              const globalIndex = (result.page - 1) * limit + index;
+              const rankClass = getRankClass(globalIndex);
+
+              row.className = rankClass;
+              row.innerHTML = `
+                <td class="rank-cell">${getRankIcon(globalIndex)}</td>
+                <td class="name-cell">
+                  <strong>${entry.name} ${entry.surname}</strong>
+                </td>
+                <td class="mobile-cell">
+                  <i class="fas fa-phone"></i>
+                  ${entry.mobile}
+                </td>
+                <td class="score-cell">
+                  <span class="score-highlight">${entry.score}</span>
+                </td>
+              `;
+              desktopTable.appendChild(row);
+            });
+
+            // Populate mobile cards
+            result.data.forEach((entry, index) => {
+              mobileCards.innerHTML += createMobileCard(entry, index);
+            });
+
+            // Update pagination
+            updatePagination();
+          })
+          .catch((err) => {
+            console.error("Failed to fetch leaderboard:", err);
+            desktopTable.innerHTML =
+              '<tr><td colspan="4" class="error-row"><i class="fas fa-exclamation-triangle"></i> Failed to load leaderboard</td></tr>';
+            mobileCards.innerHTML =
+              '<div class="error-cards"><i class="fas fa-exclamation-triangle"></i> Failed to load leaderboard</div>';
+          });
+      }
+
+      function updatePagination() {
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage === totalPages;
+        pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+
+        // Update page dots for mobile
+        const pageDots = document.getElementById("page-dots");
+        pageDots.innerHTML = "";
+        for (let i = 1; i <= Math.min(totalPages, 5); i++) {
+          const dot = document.createElement("span");
+          dot.className = `page-dot ${i === currentPage ? "active" : ""}`;
+          pageDots.appendChild(dot);
+        }
+      }
+
+      function refreshLeaderboard() {
+        loadPage(currentPage);
+      }
+
+      // Event listeners
+      prevBtn.addEventListener("click", () => {
+        if (currentPage > 1) {
+          loadPage(currentPage - 1);
+        }
+      });
+
+      nextBtn.addEventListener("click", () => {
+        if (currentPage < totalPages) {
+          loadPage(currentPage + 1);
+        }
+      });
+
+      // Load first page on load
+      loadPage(1);
+
+      // Auto-refresh every 30 seconds
+      setInterval(refreshLeaderboard, 30000);
+    </script>
+  </body>
+</html>
