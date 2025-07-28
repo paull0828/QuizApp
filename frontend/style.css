@@ -144,6 +144,9 @@ body {
   min-width: 250px;
 }
 
+a {
+  text-decoration: none;
+}
 /* Timer Styles */
 #timer {
   font-size: 16px;
@@ -1023,4 +1026,10 @@ body {
   .score-number {
     font-size: 18px;
   }
+}
+
+.leaderboard-btn-wrapper {
+  display: flex;
+  justify-content: center; /* Change to flex-start for left alignment */
+  margin-top: 12px;
 }
